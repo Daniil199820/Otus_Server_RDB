@@ -56,11 +56,41 @@ public:
     }
 
     void intersection(std::list<std::string>& args){
-        auto 
+        
+        decltype(tables) temp_tables = tables;
+
+        std::unordered_map<const int, int,std::hash<int>>table_counter;
+
+        for(const auto& cur_table : tables){
+            for(const auto& cur_key: cur_table.second){
+                table_counter[cur_key.first] = table_counter.count(cur_key.first) + 1;
+            }
+        }
+
+        for(const auto& it:table_counter){
+            if(it.second==tables.size()){
+                
+            }
+        }
     }
 
     void symmetric_difference(std::list<std::string>& args){
-    
+        
+        decltype(tables) temp_tables = tables;
+
+        std::unordered_map<const int, int,std::hash<int>>table_counter;
+
+        for(const auto& cur_table : tables){
+            for(const auto& cur_key: cur_table.second){
+                table_counter[cur_key.first] = table_counter.count(cur_key.first) + 1;
+            }
+        }
+
+        for(const auto& it:table_counter){
+            if(it.second==1){
+                
+            }
+        }
     }
 
 private:
