@@ -3,17 +3,19 @@
 #include "Ditchr_Clients.h"
 #include "Ditchr_Requests.h"
 #include <memory>
-struct Column{
-    enum Type{id,nm} type;
-    std::string name;
-};
 
 
 int main(){
 	Client_require cl;
-	cl.make_request("INSERT A 0 Lean");
-	cl.make_request("INSERT A 0 mms");
-	cl.make_request("TRUNCATE A");
+	try{
+		cl.make_request("INSERT G 0 Lean");
+	}
+	catch (const std::exception& ex)
+  	{
+    	std::cerr << "Exception: " << ex.what() << "\n";
+  	}
+	//cl.make_request("INSERT A 0 mms");
+	//cl.make_request("TRUNCATE A");
 
 	return 0;
 }

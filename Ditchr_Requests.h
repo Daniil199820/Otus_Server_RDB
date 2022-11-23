@@ -7,30 +7,49 @@
 #include <map>
 #include <list>
 #include <memory>
+#include <cstdlib>
+
+
+enum Type{TYPE_int,TYPE_string};
+
+struct Column{
+    Type type;
+    std::string name;
+};
+
+int to_integer(const std::string& arg){
+  int temp;
+  try{
+    temp = std::stoi(arg);
+  }
+  catch(const std::invalid_argument& inv_er){
+    throw std::logic_error("Argument is not an integer.");
+  }
+  return temp;
+}
 
 class Data_storage{
 public:
 
+
+
     void insert(std::list<std::string>& args){
         
         auto arguments = args;  
-        auto it = tables.find(arguments.front()); 
-        if(it!=tables.end()){
-            std::cout<< "Element is finded!\n";
-        }
-        else{
-            std::cout<<"Element isn't finded!\n";
+        auto it = tables.find(arguments.front());
+        if(it == tables.end()){
+            throw std::logic_error("This table doesn't exist.");
         }
         arguments.pop_front();
 
         Table& current_table = it->second;
         auto it_second = current_table.find(std::stoi(arguments.front()));
         if(it_second==current_table.end()){
-            std::cout << "OK\n";
-            current_table[std::stoi(arguments.front())] = arguments.back();
+            int temp = std::stoi(arguments.front());
+            current_table[temp] = arguments.back();
         }
         else{
-            std::cout << "Duplicate\n";
+            throw std::logic_error("Duplicate key.");
         }
     }
 
@@ -66,6 +85,8 @@ public:
                 table_counter[cur_key.first] = table_counter.count(cur_key.first) + 1;
             }
         }
+        
+        
 
         for(const auto& it:table_counter){
             if(it.second==tables.size()){
@@ -120,11 +141,11 @@ public:
 
     void execute(std::list<std::string>& args) override {
         if(args.size()==3){
-            std::cout<<"Correct number of arguments\n";
             data_store->insert(args);
+            std::cout<<"OK.\n";
         }
         else{
-            std::cout<<"Uncorrect number of arguments(Should be 3)\n";
+            throw std::logic_error("Uncorrect number of arguments(Should be 3)");
         }
     }
 };
