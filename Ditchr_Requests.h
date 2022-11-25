@@ -17,6 +17,7 @@ struct Column{
     std::string name;
 };
 
+
 int to_integer(const std::string& arg){
   int temp;
   try{
@@ -86,11 +87,13 @@ public:
             }
         }
         
-        
+        std::vector<std::vector<std::string>> two_2_array;        
 
         for(const auto& it:table_counter){
+            std::vector<std::string> temp_vector;
             if(it.second==tables.size()){
-                
+                temp_vector.push_back(std::to_string(it.first));
+                for()
             }
         }
     }
