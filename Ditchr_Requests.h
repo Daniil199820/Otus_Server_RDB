@@ -93,7 +93,11 @@ public:
             std::vector<std::string> temp_vector;
             if(it.second==tables.size()){
                 temp_vector.push_back(std::to_string(it.first));
-                for()
+                for(const auto& cur_table : tables){
+                    for(const auto& cur_key: cur_table.second){
+                        if(cur_key.fi)
+                    }
+                }
             }
         }
     }
