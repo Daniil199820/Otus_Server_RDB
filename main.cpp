@@ -3,12 +3,26 @@
 #include "Ditchr_Clients.h"
 #include "Ditchr_Requests.h"
 #include <memory>
-
-
+#include <sstream>
+// realize class for data visualizer and send them using observer
 int main(){
 	Client_require cl;
 	try{
-		cl.make_request("INSERT G 0 Lean");
+		cl.make_request("INSERT A 0 Lean");
+		cl.make_request("INSERT A 1 Sweater");
+		cl.make_request("INSERT A 2 Frank");
+		cl.make_request("INSERT A 3 Violation");
+		cl.make_request("INSERT A 4 Quality");
+		cl.make_request("INSERT A 5 Presicion");
+		cl.make_request("INSERT B 3 Proposal");
+		cl.make_request("INSERT B 4 Example");
+		cl.make_request("INSERT B 5 Lake");
+		cl.make_request("INSERT B 6 Flour");
+		cl.make_request("INSERT B 7 Wonder");
+		cl.make_request("INSERT B 8 Selection");
+		cl.make_request("INTERSECTION");
+		cl.make_request("SYMMETRIC_DIFFERENCE");
+
 	}
 	catch (const std::exception& ex)
   	{

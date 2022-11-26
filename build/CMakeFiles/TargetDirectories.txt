@@ -1,0 +1,3 @@
+/home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/main.dir
+/home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/edit_cache.dir
+/home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/rebuild_cache.dir

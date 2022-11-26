@@ -31,9 +31,6 @@ int to_integer(const std::string& arg){
 
 class Data_storage{
 public:
-
-
-
     void insert(std::list<std::string>& args){
         
         auto arguments = args;  
@@ -90,15 +87,21 @@ public:
         std::vector<std::vector<std::string>> two_2_array;        
 
         for(const auto& it:table_counter){
-            std::vector<std::string> temp_vector;
             if(it.second==tables.size()){
+                std::vector<std::string> temp_vector;
                 temp_vector.push_back(std::to_string(it.first));
                 for(const auto& cur_table : tables){
-                    for(const auto& cur_key: cur_table.second){
-                        if(cur_key.fi)
-                    }
+                    temp_vector.push_back(cur_table.second.at(it.first));
                 }
+                two_2_array.push_back(temp_vector);
             }
+        }
+
+        for(const auto& arr_2:two_2_array){
+            for(const auto& arr:arr_2){
+                std::cout<<arr<<", ";
+            }
+            std::cout<<"\n";
         }
     }
 
@@ -114,10 +117,26 @@ public:
             }
         }
 
+        std::vector<std::vector<std::string>>two_2_array;
+
         for(const auto& it:table_counter){
             if(it.second==1){
-                
+                std::vector<std::string> temp_vector;
+                temp_vector.push_back(std::to_string(it.first));
+                for(const auto& cur_table: tables){
+                    if(cur_table.second.find(it.first)!=cur_table.second.end()){
+                        temp_vector.push_back(cur_table.second.at(it.first));
+                    }
+                }
+                two_2_array.push_back(temp_vector);
             }
+        }
+
+        for(const auto& arr_2:two_2_array){
+            for(const auto& arr:arr_2){
+                std::cout<<arr<<", ";
+            }
+            std::cout<<"\n";
         }
     }
 
@@ -163,7 +182,6 @@ public:
 
     void execute(std::list<std::string>& args) override{
         if(args.size()==1){
-            std::cout<<"Correct number of arguments\n";
             data_store->truncate(args);
         }
         else{
@@ -178,9 +196,7 @@ public:
 
     void execute(std::list<std::string>& args) override{
         if(args.size()==0){
-            std::cout<<"Correct number of arguments\n";
             data_store->intersection(args);
-            
         }
         else{
             std::cout<<"Uncorrect number of arguments(Should be 0)\n";
@@ -194,7 +210,6 @@ public:
 
     void execute(std::list<std::string>& args) override{
         if(args.size()==0){
-            std::cout<<"Correct number of arguments\n";
             data_store->symmetric_difference(args);
         }
         else{
@@ -212,7 +227,6 @@ public:
     void set_request(const std::string& str_command){
         std::vector<Command*> commands;
         auto list_words =  parce_function(str_command);
-        
         commands.push_back(commands_dict.at(list_words.front()));
         list_words.pop_front();
         for(auto& it:commands){
@@ -224,13 +238,12 @@ private:
     
     Data_storage* data_;
 
-    std::map<const std::string, Command*> commands_dict = {
+    std::unordered_map<const std::string, Command*,std::hash<std::string>> commands_dict = {
         {"INSERT", new InsertCommand(data_)},
         {"TRUNCATE", new TruncateCommand(data_)},
         {"INTERSECTION", new IntersectionCommand(data_)},
         {"SYMMETRIC_DIFFERENCE", new SymmetricCommand(data_)}
     };
-    //std::map<const std::string, Command*> commands_dict={};
     
 
     std::list<std::string> parce_function(const std::string& str_){
@@ -267,17 +280,3 @@ private:
 
 };
 
-
- /*   Document doc;
-
-    std::vector<Command *> history;
-    history.push_back(new NewDocumentCommand(&doc));
-    history.push_back( new ParagraphCommand(&doc, "Manual"));
-    history.push_back( new ParagraphCommand(&doc, ""));
-    history.push_back( new ParagraphCommand(&doc, "Hello, World!"));
-    history.push_back( new SaveAsCommand(&doc, "hello.doc"));
-
-    for(auto c: history) {
-        c->execute();
-    }
-    */

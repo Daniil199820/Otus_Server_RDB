@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/daniil/cpp/Otus_Server_RDB/build",
+  "command": "/usr/bin/g++   -g -std=gnu++14 -o CMakeFiles/main.dir/main.cpp.o -c /home/daniil/cpp/Otus_Server_RDB/main.cpp",
+  "file": "/home/daniil/cpp/Otus_Server_RDB/main.cpp"
+}
+]
