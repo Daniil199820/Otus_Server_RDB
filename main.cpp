@@ -4,7 +4,6 @@
 #include <memory>
 #include <sstream>
 #include "Server.h"
-#include "Client.h"
 
 int to_integer(const char* arg){
   int temp;
@@ -16,6 +15,7 @@ int to_integer(const char* arg){
   }
   return temp;
 }
+
 // realize class for data visualizer and send them using observer
 int main(int argc, char* argv[]){
 
@@ -33,15 +33,14 @@ int main(int argc, char* argv[]){
 
     io_context.run();
   }
+
   catch (const std::exception& ex)
   {
     std::cerr << "Exception: " << ex.what() << "\n";
   }
 
-
-
-
-	Client_require cl;
+	
+	/*Client_require cl;
 	try{
 		cl.make_request("INSERT A 0 Lean");
 		cl.make_request("INSERT A 1 Sweater");
@@ -62,7 +61,7 @@ int main(int argc, char* argv[]){
   	{
     	std::cerr << "Exception: " << ex.what() << "\n";
   	}
-
+	*/
 	return 0;
 }
 

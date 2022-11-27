@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <thread>
 #include <atomic>
@@ -7,6 +8,8 @@
 #include <functional>
 #include "Ditchr_Requests.h"
 #include <chrono>
+#include "Ditchr_Data.h"
+#include<memory>
 
 class Client_require{
 public:
@@ -14,12 +17,15 @@ public:
 	using TCallback = std::function<void()>;
 
     Client_require():m_stopped{false}{
-        
-        req_mngr = std::make_unique<Request_manager>(new Data_storage());
+        data_store = std::make_shared<Data_storage>();
+        req_mngr = std::make_unique <Request_manager>(data_store);
         worker_thread = std::thread(&Client_require::process,this);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
+    std::shared_ptr<Data_storage> get_Data_Storage_ptr(){
+        return data_store;
+    }
 
     void make_request(const std::string& command_str){
         {
@@ -45,6 +51,7 @@ private:
     std::condition_variable wait_worker;
     std::queue<std::string> m_tasks;
     std::unique_ptr<Request_manager>req_mngr;
+    std::shared_ptr<Data_storage> data_store;
 
     void process(){
         while(m_stopped==false){

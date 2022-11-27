@@ -1,3 +1,4 @@
+#pragma once
 #include "Observer.h"
 #include "Ditchr_Data.h"
 #include "Server.h"

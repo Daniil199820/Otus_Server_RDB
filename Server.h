@@ -13,10 +13,10 @@ class session
   : public std::enable_shared_from_this<session>
 {
 public:
-  session(tcp::socket socket)
-    : socket_(std::move(socket))
+  session(tcp::socket socket,std::shared_ptr<Client_require> client_mngr)
+    : socket_(std::move(socket)),client_mngr(client_mngr)
   {
-      client_mngr = std::make_shared<Client_require>();
+    
   }
 
   void start(){
@@ -68,6 +68,7 @@ public:
   server(boost::asio::io_context& io_context, short port)
     : acceptor_(io_context, tcp::endpoint(tcp::v4(), port))
   {
+    client_mngr = std::make_shared<Client_require>();
     do_accept();
   }
 
@@ -79,7 +80,7 @@ private:
         {
           if (!ec)
           {
-            std::make_shared<session>(std::move(socket))->start();
+            std::make_shared<session>(std::move(socket),client_mngr)->start();
           }
 
           do_accept();
@@ -87,6 +88,7 @@ private:
   }
 
   tcp::acceptor acceptor_;
+  std::shared_ptr<Client_require> client_mngr;
 };
 
 /*int main(int argc, char* argv[])
