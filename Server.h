@@ -1,8 +1,11 @@
+#pragma once 
+
 #include <cstdlib>
 #include <iostream>
 #include <memory>
 #include <utility>
 #include <boost/asio.hpp>
+#include "Ditchr_Clients.h"
 
 using boost::asio::ip::tcp;
 
@@ -13,14 +16,13 @@ public:
   session(tcp::socket socket)
     : socket_(std::move(socket))
   {
+      client_mngr = std::make_shared<Client_require>();
   }
 
-  void start()
-  {
+  void start(){
     do_read();
   }
 
-private:
   void do_read()
   {
     auto self(shared_from_this());
@@ -29,16 +31,21 @@ private:
         {
           if (!ec)
           {
-            std::cout << "receive " << length << "=" << std::string{data_, length} << std::endl;
-            do_write(length);
+            if(data_[0]=='\n'){
+              client_mngr->make_request(request);
+              request.clear();
+            }
+            else{
+              request+=(data_[0]);
+            }
           }
         });
   }
 
-  void do_write(std::size_t length)
+  void do_write(const std::string& data_string)
   {
     auto self(shared_from_this());
-    boost::asio::async_write(socket_, boost::asio::buffer(data_, length),
+    boost::asio::async_write(socket_, boost::asio::buffer(data_string),
         [this, self](boost::system::error_code ec, std::size_t /*length*/)
         {
           if (!ec)
@@ -48,8 +55,11 @@ private:
         });
   }
 
+private:
   tcp::socket socket_;
+  std::shared_ptr<Client_require> client_mngr; 
   char data_[1];
+  std::string request;
 };
 
 class server

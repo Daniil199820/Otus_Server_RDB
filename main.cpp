@@ -1,11 +1,31 @@
 #include <iostream>
 #include <vector>
 #include "Ditchr_Clients.h"
-#include "Ditchr_Requests.h"
 #include <memory>
 #include <sstream>
+#include "Server.h"
+#include "Client.h"
 // realize class for data visualizer and send them using observer
-int main(){
+int main(int argc, char* argv[]){
+
+	try
+  {
+    if (argc != 2)
+    {
+      std::cerr << "Usage: async_tcp_echo_server <port>\n";
+      return 1;
+    }
+
+    boost::asio::io_context io_context;
+
+    server server(io_context, std::atoi(argv[1]));
+
+    io_context.run();
+  }
+  catch (const std::exception& ex)
+  {
+    std::cerr << "Exception: " << ex.what() << "\n";
+  }
 	Client_require cl;
 	try{
 		cl.make_request("INSERT A 0 Lean");
@@ -22,14 +42,11 @@ int main(){
 		cl.make_request("INSERT B 8 Selection");
 		cl.make_request("INTERSECTION");
 		cl.make_request("SYMMETRIC_DIFFERENCE");
-
 	}
 	catch (const std::exception& ex)
   	{
     	std::cerr << "Exception: " << ex.what() << "\n";
   	}
-	//cl.make_request("INSERT A 0 mms");
-	//cl.make_request("TRUNCATE A");
 
 	return 0;
 }
