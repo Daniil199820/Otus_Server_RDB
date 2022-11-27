@@ -5,6 +5,17 @@
 #include <sstream>
 #include "Server.h"
 #include "Client.h"
+
+int to_integer(const char* arg){
+  int temp;
+  try{
+     temp = std::stoi(arg);
+  }
+  catch(const std::invalid_argument& inv_er){
+    throw std::invalid_argument("Argument is not an integer.");
+  }
+  return temp;
+}
 // realize class for data visualizer and send them using observer
 int main(int argc, char* argv[]){
 
@@ -18,7 +29,7 @@ int main(int argc, char* argv[]){
 
     boost::asio::io_context io_context;
 
-    server server(io_context, std::atoi(argv[1]));
+    server server(io_context,to_integer(argv[1]));
 
     io_context.run();
   }
@@ -26,6 +37,10 @@ int main(int argc, char* argv[]){
   {
     std::cerr << "Exception: " << ex.what() << "\n";
   }
+
+
+
+
 	Client_require cl;
 	try{
 		cl.make_request("INSERT A 0 Lean");
