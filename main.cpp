@@ -21,15 +21,17 @@ int main(int argc, char* argv[]){
 
 	try
   {
-    if (argc != 2)
-    {
-      std::cerr << "Usage: async_tcp_echo_server <port>\n";
-      return 1;
-    }
+    //if (argc != 2)
+   // {
+   //   std::cerr << "Usage: async_tcp_echo_server <port>\n";
+   //   return 1;
+   // }
 
     boost::asio::io_context io_context;
 
-    server server(io_context,to_integer(argv[1]));
+    //server server(io_context,to_integer(argv[1]));
+
+	server server(io_context,9000);
 
     io_context.run();
   }

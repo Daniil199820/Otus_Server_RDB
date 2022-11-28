@@ -1,38 +1,21 @@
 
 #include <iostream>
 
-struct S{
-    S(int value):value(value){
-        std::cout<<"Constructor\n";
-        p = new int();
-        throw 23;
-    }
-
-    ~S(){
-        delete p;
-        std::cout<<"Destructor\n";
-    }
-private:
-    int value; 
-    int* p;
+class A{
+public:
+    virtual void f() {std::cout<<"A";}
 };
 
+class B: public A{
+public:
+    void f(){std::cout<<"B";}
+};
 
-int gg__(){
-    int temp =90;
-    //throw 43;
-    return temp;
-}
+void g(A &a){a.f();}
 
 int main(){
-    try{
-        
-        S(static_cast<int>(gg__()));
-    }
 
-    catch(...){
-        std::cout<<"we in catch\n";
-    }
-
+    B b;
+    g(b);
     return 0;
 }

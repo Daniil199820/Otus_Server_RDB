@@ -41,6 +41,16 @@ private:
             std::cout << "resolveHandler - no address!" << std::endl;
             return;
         }
+        //ba::ip::tcp::endpoint ep(
+        //    ba::ip::address::from_string(
+        //        "127.0.0.1"
+        //    ),
+        //    9999
+        //);
+
+        //ba::ip::tcp::socket sock(io_context);
+
+        //sock.connect(ep);
 
         m_tcp_socket.async_connect(
             *it,
