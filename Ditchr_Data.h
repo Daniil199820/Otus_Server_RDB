@@ -40,6 +40,7 @@ public:
         else{
             throw std::logic_error("Duplicate key.");
         }
+        notifyUpdate("OK.\n");
     }
 
     void truncate(std::list<std::string>& args){

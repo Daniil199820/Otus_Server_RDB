@@ -1214,8 +1214,11 @@ CMakeFiles/main.dir/main.cpp.o: ../main.cpp \
   /usr/include/boost/asio/windows/random_access_handle.hpp \
   /usr/include/boost/asio/windows/stream_handle.hpp \
   /usr/include/boost/asio/write_at.hpp \
-  /usr/include/boost/asio/impl/write_at.hpp
+  /usr/include/boost/asio/impl/write_at.hpp \
+  ../Ditchr_Responce.h
 
+
+../Ditchr_Responce.h:
 
 /usr/include/boost/asio/write_at.hpp:
 

@@ -6,17 +6,23 @@
 #include <utility>
 #include <boost/asio.hpp>
 #include "Ditchr_Clients.h"
-
+#include "Ditchr_Responce.h"
 using boost::asio::ip::tcp;
 
 class session
-  : public std::enable_shared_from_this<session>
+  : public std::enable_shared_from_this<session>, public Session_DB
 {
 public:
   session(tcp::socket socket,std::shared_ptr<Client_require> client_mngr)
     : socket_(std::move(socket)),client_mngr(client_mngr)
   {
-    
+      db_responce = std::make_shared<DB_Responce>(client_mngr.get(),this);
+  }
+
+  ~session(){
+    std::cout<<"awd\n";
+    int x=123;
+    x=324;
   }
 
   void start(){
@@ -31,19 +37,19 @@ public:
         {
           if (!ec)
           {
-            if(data_[0]==';'){
+            if(data_[0]=='\n'){
               client_mngr->make_request(request);
               request.clear();
             }
             else{
               request+=(data_[0]);
-              do_read();
             }
+            do_read();
           }
         });
   }
 
-  void do_write(const std::string& data_string)
+  void do_write(const std::string& data_string) override
   {
     auto self(shared_from_this());
     boost::asio::async_write(socket_, boost::asio::buffer(data_string),
@@ -59,6 +65,7 @@ public:
 private:
   tcp::socket socket_;
   std::shared_ptr<Client_require> client_mngr; 
+  std::shared_ptr<DB_Responce> db_responce;
   char data_[1];
   std::string request;
 };

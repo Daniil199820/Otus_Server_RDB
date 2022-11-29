@@ -1101,4 +1101,5 @@ CMakeFiles/main.dir/main.cpp.o: /home/daniil/cpp/Otus_Server_RDB/main.cpp \
  /usr/include/boost/asio/windows/random_access_handle.hpp \
  /usr/include/boost/asio/windows/stream_handle.hpp \
  /usr/include/boost/asio/write_at.hpp \
- /usr/include/boost/asio/impl/write_at.hpp
+ /usr/include/boost/asio/impl/write_at.hpp \
+ /home/daniil/cpp/Otus_Server_RDB/Ditchr_Responce.h
