@@ -6,7 +6,8 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-e6a55854f8379d1cae2b.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.2"
@@ -27,7 +28,7 @@
 					[
 						0
 					],
-					"name" : "27.DB",
+					"name" : "Otus_join_server",
 					"targetIndexes" : 
 					[
 						0
@@ -38,9 +39,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "main::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-main-Debug-f277f67f1cfc8507ccdb.json",
-					"name" : "main",
+					"id" : "join_server::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-join_server-Debug-afe587c24c3dfbffffb1.json",
+					"name" : "join_server",
 					"projectIndex" : 0
 				}
 			]

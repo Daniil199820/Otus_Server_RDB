@@ -40,7 +40,8 @@ private:
             return;
         }
 
-        const std::string request = "INSERT A 0 Lean\r\n";
+        const std::string request = "INSERT A 1 Lean\n";
+
         ba::write(m_tcp_socket, ba::buffer(request));
 
         m_tcp_socket.async_read_some(

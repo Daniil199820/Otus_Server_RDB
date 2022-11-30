@@ -1,3 +1,9 @@
-/home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/main.dir
+/home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/join_server.dir
+/home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/package.dir
+/home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/package_source.dir
 /home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/edit_cache.dir
 /home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/rebuild_cache.dir
+/home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/list_install_components.dir
+/home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/install.dir
+/home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/install/local.dir
+/home/daniil/cpp/Otus_Server_RDB/build/CMakeFiles/install/strip.dir

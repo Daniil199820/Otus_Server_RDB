@@ -20,9 +20,6 @@ public:
   }
 
   ~session(){
-    std::cout<<"awd\n";
-    int x=123;
-    x=324;
   }
 
   void start(){

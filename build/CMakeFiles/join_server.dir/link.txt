@@ -1,0 +1,1 @@
+/usr/bin/g++ -g -rdynamic CMakeFiles/join_server.dir/main.cpp.o -o join_server  -ldl 
