@@ -27,6 +27,10 @@ public:
         return data_store;
     }
 
+    std::shared_ptr<Request_manager> get_Request_ptr(){
+        return req_mngr;
+    }
+
     void make_request(const std::string& command_str){
         {
             std::lock_guard<std::mutex> guard(worker_mutex);
@@ -50,7 +54,7 @@ private:
     std::mutex worker_mutex;
     std::condition_variable wait_worker;
     std::queue<std::string> m_tasks;
-    std::unique_ptr<Request_manager>req_mngr;
+    std::shared_ptr<Request_manager>req_mngr;
     std::shared_ptr<Data_storage> data_store;
 
     void process(){

@@ -6,9 +6,7 @@
 #include <list>
 #include <unordered_map>
 #include <vector>
-
-#include "Observer.h"
-
+#include <sstream>
 int to_integer(const std::string& arg){
   int temp;
   try{
@@ -20,51 +18,55 @@ int to_integer(const std::string& arg){
   return temp;
 }
 
-class Data_storage:public Observable{
+class Data_storage{
 public:
-    void insert(std::list<std::string>& args){
+    std::string insert(std::list<std::string>& args){
         
         auto arguments = args;  
         auto it = tables.find(arguments.front());
         if(it == tables.end()){
-            throw std::logic_error("This table doesn't exist.");
+            return std::string{"This table doesn't exist.\n"};
         }
         arguments.pop_front();
 
         Table& current_table = it->second;
-        auto it_second = current_table.find(std::stoi(arguments.front()));
+
+        int id;
+        try {
+            id = to_integer(arguments.front());
+        }
+        catch(const std::exception& ex){
+            return std::string{"Error:Id is not integer.\n"};
+        }
+
+        auto it_second = current_table.find(id);
         if(it_second==current_table.end()){
-            int temp = std::stoi(arguments.front());
-            current_table[temp] = arguments.back();
+            current_table[id] = arguments.back();
         }
         else{
-            throw std::logic_error("Duplicate key.");
+            return std::string{"Duplicate key.\n"};
         }
-        notifyUpdate("OK.\n");
+
+        return {"Ok.\n"};
     }
 
-    void truncate(std::list<std::string>& args){
+    std::string truncate(std::list<std::string>& args){
+
         auto arguments = args;
+
         auto it =tables.find(arguments.front());
-        
         if(it!=tables.end()){
-            std::cout<< "Element is finded!\n";
+            arguments.pop_front();
+            Table& current_table = it->second;
+            current_table.clear();
         }
         else{
-            std::cout<<"Element isn't finded!\n";
+            return {"Element isn't finded!\n"};
         }
-
-        arguments.pop_front();
-
-        Table& current_table = it->second;
-        current_table.clear();
-        for(auto gg:A){
-            std::cout<<gg.second;
-        }
-
+        return {"Ok.\n"};
     }
 
-    void intersection(std::list<std::string>& args){
+    std::string intersection(std::list<std::string>& args){
         
         decltype(tables) temp_tables = tables;
 
@@ -89,15 +91,20 @@ public:
             }
         }
 
+        std::stringstream result_string;
+
         for(const auto& arr_2:two_2_array){
             for(const auto& arr:arr_2){
-                std::cout<<arr<<", ";
+                result_string<<arr<<", ";
             }
-            std::cout<<"\n";
+            result_string<<"\n";
         }
+        result_string<<"Ok.\n";
+        
+        return std::string(result_string.str());
     }
 
-    void symmetric_difference(std::list<std::string>& args){
+    std::string symmetric_difference(std::list<std::string>& args){
         
         decltype(tables) temp_tables = tables;
 
@@ -124,12 +131,17 @@ public:
             }
         }
 
+        std::stringstream result_string;
+
         for(const auto& arr_2:two_2_array){
             for(const auto& arr:arr_2){
-                std::cout<<arr<<", ";
+                result_string<<arr<<", ";
             }
-            std::cout<<"\n";
+            result_string<<"\n";
         }
+        result_string<<"Ok.\n";
+
+        return std::string(result_string.str());
     }
 
 private:

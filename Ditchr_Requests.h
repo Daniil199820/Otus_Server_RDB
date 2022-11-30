@@ -9,7 +9,7 @@
 #include <list>
 #include <memory>
 #include <cstdlib>
-
+#include "Observer.h"
 
 enum Type{TYPE_int,TYPE_string};
 
@@ -21,7 +21,7 @@ struct Column{
 
 class ICommand {
 public:
-    virtual void execute(std::list<std::string>& args) = 0;
+    virtual std::string execute(std::list<std::string>& args) = 0;
     virtual ~ICommand() = default;
 };
 
@@ -37,13 +37,12 @@ class InsertCommand: public Command{
 public:
     InsertCommand(std::shared_ptr<Data_storage> d): Command(d){}
 
-    void execute(std::list<std::string>& args) override {
+    std::string execute(std::list<std::string>& args) override {
         if(args.size()==3){
-            data_store->insert(args);
-            std::cout<<"OK.\n";
+            return data_store->insert(args);
         }
         else{
-            throw std::logic_error("Uncorrect number of arguments(Should be 3)");
+            return std::string{"Uncorrect number of arguments(Should be 3)\n"};
         }
     }
 };
@@ -52,12 +51,12 @@ class TruncateCommand: public Command{
 public:
     TruncateCommand(std::shared_ptr<Data_storage> d): Command(d){}
 
-    void execute(std::list<std::string>& args) override{
+    std::string execute(std::list<std::string>& args) override{
         if(args.size()==1){
-            data_store->truncate(args);
+            return data_store->truncate(args);
         }
         else{
-            std::cout<<"Uncorrect number of arguments(Should be 1)\n";
+            return std::string{"Uncorrect number of arguments(Should be 1)\n"};
         }
     }
 };
@@ -66,12 +65,12 @@ class IntersectionCommand: public Command{
 public:
     IntersectionCommand(std::shared_ptr<Data_storage> d): Command(d){}
 
-    void execute(std::list<std::string>& args) override{
+    std::string execute(std::list<std::string>& args) override{
         if(args.size()==0){
-            data_store->intersection(args);
+            return data_store->intersection(args);
         }
         else{
-            std::cout<<"Uncorrect number of arguments(Should be 0)\n";
+            return {"Uncorrect number of arguments(Should be 0)\n"};
         }
     }
 };
@@ -80,30 +79,35 @@ class SymmetricCommand: public Command{
 public:
     SymmetricCommand(std::shared_ptr<Data_storage> d): Command(d){}
 
-    void execute(std::list<std::string>& args) override{
+    std::string execute(std::list<std::string>& args) override{
         if(args.size()==0){
-            data_store->symmetric_difference(args);
+           return data_store->symmetric_difference(args);
         }
         else{
-            std::cout<<"Uncorrect number of arguments(Should be 0)\n";
+            return std::string {"Uncorrect number of arguments(Should be 0)\n"};
         }
     }
 };
 
 
 
-class Request_manager{
+class Request_manager:public Observable{
 public:
     Request_manager(std::shared_ptr<Data_storage> dd):data_(dd){}
 
     void set_request(const std::string& str_command){
         std::vector<Command*> commands;
         auto list_words =  parce_function(str_command);
-        commands.push_back(commands_dict.at(list_words.front()));
-        list_words.pop_front();
-        for(auto& it:commands){
-            it->execute(list_words);
-        }  
+        if(!list_words.empty()){
+            commands.push_back(commands_dict.at(list_words.front()));
+            list_words.pop_front();
+            for(auto& it:commands){
+                notifyUpdate(it->execute(list_words));
+            }
+        }
+        else{
+            notifyUpdate("Use tabulations for splitting.\n"); 
+        }
     }
 
 private:
@@ -119,16 +123,7 @@ private:
     
 
     std::list<std::string> parce_function(const std::string& str_){
-        std::list<std::string> temp_splitted = split(str_,' ');
-        
-        if(!temp_splitted.empty()){
-        }
-        
-        if( temp_splitted.empty()){
-            //throw ("use tabulations for splitting"); 
-        }
-
-        return temp_splitted;
+        return split(str_,' ');
     }
 
     std::list<std::string> split(const std::string &str, char d)

@@ -15,7 +15,7 @@ class DB_Responce:public Observer{
 public:
     DB_Responce(Client_require* cl_mngr, Session_DB* session_server):
     cl_mngr(cl_mngr),session_server(session_server){
-        cl_mngr->get_Data_Storage_ptr().get()->addObserver(this);
+        cl_mngr->get_Request_ptr().get()->addObserver(this);
     }
     void update(const std::string& arg){
         session_server->do_write(arg);
@@ -24,6 +24,4 @@ public:
 private:
     Client_require* cl_mngr;
     Session_DB* session_server;
-
-    
 };
