@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.2)
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 
-project(Otus_join_server VERSION ${PROJECT_VERSION})
+project(join_server VERSION ${PROJECT_VERSION})
 
 find_package(Threads)
 

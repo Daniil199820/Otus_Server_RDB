@@ -895,7 +895,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "Otus_join_server"
+			"value" : "join_server"
 		},
 		{
 			"name" : "CMAKE_PROJECT_VERSION",
